@@ -7,6 +7,8 @@ def crilling():
     import openpyxl     #엑셀 관련 모듈
     import time         #프로그램 중간에 쉬는것 모듄
     import math         #총 페이지 계산에 필요한 모듈
+    # selenium으로 무엇인가 입력하기 위한 import
+    from selenium.webdriver.common.keys import Keys
 
 
     file_name = "1월25일테스트본"      #입력받은 파일이름을 가져오는 함수
@@ -18,17 +20,65 @@ def crilling():
     driver.get(url)                 #url을 쳐서 띄우기
     driver.implicitly_wait(10)      #창이 켜질때까지 기다리는 함수
 
-
+    excel_file = openpyxl.Workbook()  # 엑셀로 저장을 위해 쓰는 엑셀 관련 함수들.
+    excel_sheet = excel_file.active
+    excel_sheet.append(['score', 'message', 'date', 'option_one', 'option_two', 'option_three'])  # 매장마다 바뀜
+    excel_sheet.column_dimensions['B'].width = 100
     #평점 낮은순 클릭
     #print(driver.find_element_by_xpath("/html/body/div/div/div[3]/div[2]/div[2]/div/div[3]/div[6]/div/div[3]/div/div[1]/div[1]/ul/li[4]/a").text)
-    driver.find_element_by_xpath("/html/body/div/div/div[3]/div[2]/div[2]/div/div[3]/div[6]/div/div[3]/div/div[1]/div[1]/ul/li[4]/a").click()
+    driver.find_element(By.XPATH,"//*[@id='REVIEW']/div/div[3]/div/div[1]/div[1]/ul/li[4]").click()
     #
     driver.implicitly_wait(10)
 
 
 
-    while (True):
-         pass
+    for page in range(3,35):
+        time.sleep(1)
+        review_data = driver.find_elements(By.XPATH,
+            '//*[@id="REVIEW"]/div/div[3]/div/div[2]/ul/li/div/div[1]/div/div[1]/div/div[1]/div[2]/div/span')  # 리뷰 텍스트 내용 선택
+        driver.implicitly_wait(20)
+        revier_star = driver.find_elements(By.XPATH,
+            '//*[@id="REVIEW"]/div/div[3]/div/div[2]/ul/li/div/div[1]/div/div[1]/div/div[1]/div[1]/div[2]/div[1]/em')  # 평점이 몇점인지 선택ㄱ
+        review_date = driver.find_elements(By.XPATH,
+            '//*[@id="REVIEW"]/div/div[3]/div/div[2]/ul/li/div/div[1]/div/div[1]/div/div[1]/div[1]/div[2]/div[2]/span')
+        review_op_fu_total = driver.find_elements(By.XPATH,
+            '//*[@id="REVIEW"]/div/div[3]/div/div[2]/ul/li/div/div[1]/div/div[1]/div/div[1]/div[1]/div[2]/div[3]/div/button/span')
+        driver.implicitly_wait(20)
+
+        for (j, k, l, s) in zip(revier_star, review_data, review_date,
+                                review_op_fu_total):  # 리뷰 텍스트 내용이랑 평점 몇점인지 내용 을 for문으로 하나하나 씩 가져온다.
+            l = l.text.replace('.', '')
+
+            driver.implicitly_wait(20)
+            excel_sheet.append([j.text, k.text + "\n", l, s.text])  # 엑셀에다가 내용을 추가함.
+            driver.implicitly_wait(20)
+
+        if page<=12:
+            pass
+        if 13<=page<=22:
+            page-=10
+        if 23<=page<=32:
+            page-=20
+        if 33<=page<=42:
+            page-=30
+        print(page)
+       # print(page)
+       # print("/html/body/div/div/div[3]/div[2]/div[2]/div/div[3]/div[6]/div/div[3]/div/div[2]/div/div/a[%s]"%str(page))
+        driver.find_elements(By.XPATH,"/html/body/div/div/div[3]/div[2]/div[2]/div/div[3]/div[6]/div/div[3]/div/div[2]/div/div/a[%s]"%str(page))[0].click()
+
+        #driver.find_element(By.CSS_SELECTOR,"#REVIEW > div > div._2y6yIawL6t > div > div.cv6id6JEkg > div > div > a:nth-child(%s)"%str(page)).click()
+        print("페이지")
+        time.sleep(1)
+
+
+    #
+    #
+    excel_file.save("{}.xlsx".format("테스트버전"))
+    excel_file.close()
+    time.sleep(1)
+    time.sleep(1000)
+
+
 
 
 
