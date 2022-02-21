@@ -46,6 +46,8 @@ def crilling():
     driver.find_element(By.XPATH,"//*[@id='REVIEW']/div/div[3]/div/div[1]/div[1]/ul/li[3]").click()
     driver.implicitly_wait(10)
 
+    driver.find_element()
+
 
 
 
