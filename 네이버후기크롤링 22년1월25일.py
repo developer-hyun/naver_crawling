@@ -47,7 +47,7 @@ def crilling():
     driver.implicitly_wait(10)
 
     driver.find_element()
-    #driver.fon
+    #driver.fiond_em
 
 
 
