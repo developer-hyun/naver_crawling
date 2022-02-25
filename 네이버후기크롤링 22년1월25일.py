@@ -49,6 +49,22 @@ def crilling():
     driver.find_element()
     #driver.fiond_em
 
+    time.sleep(1)
+    # 아까 계산한 총 페이지를 컴퓨터가 숫자로 인식할 수 있게 변환
+    for num in Total_review_data:
+        Total_review_data_text += num.text
+        Total_review_data_text = Total_review_data_text.replace(',', '')
+    Page_num = math.floor(int(Total_review_data_text) / 20)
+    print(Page_num)
+    count = Page_num
+    # fp = open("gyui.txt",'w',-1,'utf-8')
+    set_number = 11
+    al = 0
+    # 오류가 발생했을 경우에 무슨 오류인지 알기 위하여 try - except 함수 사용
+    try:
+        for page in range(2, Page_num + 2):  # 총 페이지 숫자까지 for문으로 돔.
+            driver.implicitly_wait(10)
+
 
 
 
