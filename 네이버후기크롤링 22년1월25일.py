@@ -65,6 +65,15 @@ def crilling():
         for page in range(2, Page_num + 2):  # 총 페이지 숫자까지 for문으로 돔.
             driver.implicitly_wait(10)
 
+    for page in range(3, 35):
+        time.sleep(1)
+        review_data = driver.find_elements(By.XPATH,
+                                           '/html/body/div/div/div[3]/div[2]/div[2]/div/div[3]/div[6]/div/div[3]/div/div[2]/ul/li/div/div[1]/div/div[1]/div/div/div[2]/div')  # 리뷰 텍스트 내용 선택
+        driver.implicitly_wait(20)
+        revier_star = driver.find_elements(By.XPATH,
+                                           '/html/body/div/div/div[3]/div[2]/div[2]/div/div[3]/div[6]/div/div[3]/div/div[2]/ul/li/div/div[1]/div/div[1]/div/div/div[1]/div[2]/div[1]/em')  # 평점이 몇점인지 선택ㄱ
+        review_date = driver.find_elements(By.XPATH,
+
 
 
 
