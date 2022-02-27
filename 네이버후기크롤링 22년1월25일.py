@@ -74,7 +74,33 @@ def crilling():
                                            '/html/body/div/div/div[3]/div[2]/div[2]/div/div[3]/div[6]/div/div[3]/div/div[2]/ul/li/div/div[1]/div/div[1]/div/div/div[1]/div[2]/div[1]/em')  # 평점이 몇점인지 선택ㄱ
         review_date = driver.find_elements(By.XPATH,
 
+                                           # 총 페이지 계산을 위해 사용
+                                           Total_review_data=driver.find_elements_by_css_selector(
+                                               '#area_review_list > div.header_review._review_list_header > strong > span')
+        driver.implicitly_wait(10)
+        Total_review_data_text = ""
+        time.sleep(1)
+        if selected.get() == 0:  # 최신순을 클릭하였을때
+            driver.find_element_by_xpath('//*[@id="area_review_list"]/div[1]/ul/li[2]/a').click()
+        if selected.get() == 1:  # 평점 높은순을 클릭하였을때
+            driver.find_element_by_xpath('//*[@id="area_review_list"]/div[1]/ul/li[3]/a').click()
+        else:  # 평점 낮은 순을 클릭 하였을 떄
+            driver.find_element_by_xpath('//*[@id="area_review_list"]/div[1]/ul/li[2]/a').click()
 
+        # cur.execute("CREATE TABLE students (id integer primary key autoincrement, score, message)")
+
+        # driver.find_element_by_xpath('//*[@id="area_review_list"]/div[1]/ul/li[3]/a').click()  #평점 높은순
+        # driver.find_element_by_xpath('//*[@id="area_review_list"]/div[1]/ul/li[4]/a').click() #평점 낮은 순 클릭.
+        # driver.find_element_by_xpath('//*[@id="area_review_list"]/div[1]/ul/li[2]/a').click() #최신순 클릭.
+        time.sleep(1)
+        # 아까 계산한 총 페이지를 컴퓨터가 숫자로 인식할 수 있게 변환
+        for num in Total_review_data:
+            Total_review_data_text += num.text
+        Total_review_data_text = Total_review_data_text.replace(',', '')
+        Page_num = math.floor(int(Total_review_data_text) / 20)
+        print(Page_num)
+        count = Page_num
+        # fp = open("gyui.txt",'w',-1,'
 
 
 if __name__ == '__main__':
