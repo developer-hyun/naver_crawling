@@ -102,6 +102,31 @@ def crilling():
         count = Page_num
         # fp = open("gyui.txt",'w',-1,'
 
+        elif set_number < page < set_number + 10:
+        if al == 9:
+            time.sleep(1)
+        page = page - (set_number - 2)
+        review_data = driver.find_elements_by_css_selector(
+            'div.cell_text._cell_text > div.area_text > p > span.text')  # 리뷰 텍스트 내용 선택
+        driver.implicitly_wait(20)
+        revier_star = driver.find_elements_by_css_selector(
+            'div.cell_text._cell_text > div.area_text > div.area_star_small > span.number_grade')  # 평점이 몇점인지 선택ㄱ
+        review_date = driver.find_elements_by_css_selector(
+            'div.cell_text._cell_text > div.area_text > div:nth-child(2) > div > span:nth-child(2)')
+        review_op_fu_total = driver.find_elements_by_css_selector(
+            'div.cell_text._cell_text > div.area_text > div:nth-child(2) > div > p')
+        driver.implicitly_wait(20)
+        for (j, k, l, s) in zip(revier_star, review_data, review_date,
+                                review_op_fu_total):  # 리뷰 텍스트 내용이랑 평점 몇점인지 내용 을 for문으로 하나하나 씩 가져온다.
+        # cur.execute("INSERT INTO students (score, message) VALUES (?,?)", (j.text, k.text))
+            l = l.text.replace('.', '')
+        # s = s.text.split(':')
+        # opt = s[2].split('/')[0]
+        # fum = s[3].split('X')[0]
+        # s = s.text.split(':')
+        # opt = s[2].split('/')[0]
+        # opt2 = s[3].split(' ')[1]
+
 
 if __name__ == '__main__':
     crilling()
