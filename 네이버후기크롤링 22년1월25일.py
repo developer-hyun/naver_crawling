@@ -126,7 +126,15 @@ def crilling():
         # s = s.text.split(':')
         # opt = s[2].split('/')[0]
         # opt2 = s[3].split(' ')[1]
+        int("페이지")
+        time.sleep(1)
 
+        #
+        #
+        excel_file.save("{}.xlsx".format("BenBolic(평점3점)"))
+        excel_file.close()
+        time.sleep(1)
+        time.sleep(1000)
 
-if __name__ == '__main__':
+        if __name__ == '__main__':
     crilling()
