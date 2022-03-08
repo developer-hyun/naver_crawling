@@ -135,6 +135,8 @@ def crilling():
         excel_file.close()
         time.sleep(1)
         time.sleep(1000)
+        #time.sllep
+        #driver.dom
 
         if __name__ == '__main__':
     crilling()
